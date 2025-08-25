@@ -5,7 +5,7 @@ from datetime import datetime
 from loguru import logger
 
 from data_pipeline.download import download_to_local
-from data_pipeline.read import read_csv_local  # <- ta fonction qui lit un CSV local
+from data_pipeline.read import read_csv_local
 
 
 def main() -> None:
