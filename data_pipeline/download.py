@@ -1,4 +1,5 @@
 """This script aims to download raw data 'MAJNUM.csv' from ARCEP"""
+
 from pathlib import Path
 
 import requests
