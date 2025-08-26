@@ -7,6 +7,7 @@ from loguru import logger
 
 def timed(label: str):
     """Time decorators."""
+
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
@@ -15,5 +16,7 @@ def timed(label: str):
             dt = timer() - t0
             logger.info(f"{label} terminé en {dt:.3f}s")
             return result
+
         return wrapper
+
     return decorator
