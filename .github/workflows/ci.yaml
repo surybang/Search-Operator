@@ -32,5 +32,6 @@ jobs:
           uv run ruff check .
 
       - name: Run tests
+        if: ${{ hashFiles('tests/**/*.py') != ''}}
         run: |
-          uv run pytest . 
+          uv run pytest . --maxfail=1
