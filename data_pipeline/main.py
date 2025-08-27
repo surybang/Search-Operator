@@ -6,10 +6,11 @@ from loguru import logger
 
 from data_pipeline.download import download_to_local
 from data_pipeline.read import read_csv_local
+from data_pipeline.upload import file_hash
 
 
 def main() -> None:
-    logger.info(f"Début du pipeline à {datetime.now().isoformat(timespec='seconds')}")
+    logger.info(f"Start pipeline at {datetime.now().isoformat(timespec='seconds')}")
 
     # 1) Download
     local_path = download_to_local(
@@ -22,8 +23,13 @@ def main() -> None:
     df = read_csv_local(local_path)
 
     # 3) Aperçu
-    logger.info(f"Aperçu du DataFrame : \n {df.head()}")
-    logger.info(f"Fin du pipeline à {datetime.now().isoformat(timespec='seconds')}")
+    logger.info(f"Overview of the DataFrame : \n {df.head()}")
+
+    # 4) Calcul du hash
+    hash = file_hash(local_path)
+    logger.info(f"Hash of the file downloaded : {hash}")
+
+    logger.info(f"End of the pipeline at {datetime.now().isoformat(timespec='seconds')}")
 
 
 if __name__ == "__main__":
