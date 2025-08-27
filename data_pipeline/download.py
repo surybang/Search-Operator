@@ -1,5 +1,6 @@
 """This script aims to download raw data 'MAJNUM.csv' from ARCEP"""
 from pathlib import Path
+from datetime import datetime
 
 import requests
 from loguru import logger
@@ -29,7 +30,10 @@ def download_to_local(url: str, output_dir: str, filename: str) -> Path:
 
     if filename is None:
         filename = Path(url).name
-    outpath = outdir / filename
+
+    timestamp = datetime.now().strftime("%Y%m%d")
+    filaname_timed = f"{Path(filename).stem}{timestamp}{Path(filename).suffix}"
+    outpath = outdir / filaname_timed
 
     try:
         r = requests.get(url, timeout=60)
