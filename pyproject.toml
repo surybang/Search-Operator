@@ -11,3 +11,17 @@ dependencies = [
     "requests>=2.32.5",
     "s3fs>=2025.7.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "ruff>=0.12.10",
+]
+
+[tool.pytest.ini_options]
+addopts =[
+    "--import-mode=importlib",
+]
+pythonpath = [
+    "."
+]
