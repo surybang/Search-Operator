@@ -1,10 +1,12 @@
-import s3fs
-from loguru import logger
-import hashlib
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+import hashlib
+
+from loguru import logger
+import s3fs
 
 from data_pipeline.exceptions import UploadError
+from decorators import timed
 
 
 def file_hash(path: Path) -> str:
@@ -17,7 +19,7 @@ def file_hash(path: Path) -> str:
     return h.hexdigest()
 
 
-def s3_file_hash(fs: s3fs.S3fFileSystem, s3_uri: str) -> str:
+def s3_file_hash(fs: s3fs.S3FileSystem, s3_uri: str) -> str:
     """Compute hash of a remote file in s3"""
 
     h = hashlib.md5()
@@ -27,7 +29,11 @@ def s3_file_hash(fs: s3fs.S3fFileSystem, s3_uri: str) -> str:
     return h.hexdigest()
 
 
-def get_latest_remote_file(fs: s3fs.S3FileSystem, remote_path: str, stem: str) -> str | None:
+def get_latest_remote_file(
+        fs: s3fs.S3FileSystem,
+        remote_path: str,
+        stem: str = "MAJNUM"
+        ) -> str | None:
     """
     Retrieve the latest file in MinIO matching a naming pattern.
 
@@ -49,6 +55,7 @@ def get_latest_remote_file(fs: s3fs.S3FileSystem, remote_path: str, stem: str) -
     return max(matches) if matches else None
 
 
+@timed("Upload if new")
 def upload_if_new(
         fs: s3fs.S3FileSystem,
         bucket: str,
@@ -78,8 +85,11 @@ def upload_if_new(
     """
 
     try:
-        remote_path = f"{bucket}/{key}"
-        last_uri = get_latest_remote_file(fs, remote_path, local_path, stem)
+        remote_path = f"{bucket}{key}"
+        logger.info(f"Remote path : {bucket}{key}")
+
+        last_uri = get_latest_remote_file(fs, remote_path, stem)
+        logger.info(f"Last_uri: {last_uri}")
 
         local_hash = file_hash(local_path)
         logger.info(f"Local hash: {local_hash}")
@@ -95,6 +105,7 @@ def upload_if_new(
         ts = datetime.now().strftime("%Y%m%d")
         s3_uri = f"{remote_path.rstrip('/')}/{stem}_{ts}.csv"
         logger.info(f"Upload to {s3_uri}")
+
         fs.put(str(local_path), s3_uri)
 
         return True
