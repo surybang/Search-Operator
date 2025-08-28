@@ -1,4 +1,5 @@
 "Main entry for data_pipeline module"
+
 import os
 from datetime import datetime
 
@@ -30,10 +31,11 @@ def main() -> None:
     # 4) On check si le fichier est nouveau
     # 4bis) On doit d'abord initialiser un client MinIO
     fs = s3fs.S3FileSystem(
-        client_kwargs={'endpoint_url': 'https://'+'minio.lab.sspcloud.fr'},
+        client_kwargs={"endpoint_url": "https://" + "minio.lab.sspcloud.fr"},
         key=os.environ["AWS_ACCESS_KEY_ID"],
         secret=os.environ["AWS_SECRET_ACCESS_KEY"],
-        token=os.environ["AWS_SESSION_TOKEN"])
+        token=os.environ["AWS_SESSION_TOKEN"],
+    )
     bucket = "s3://fabienhos/arcep/"
     key = "raw"
     is_new = upload_if_new(fs, bucket, key, local_path)
@@ -43,7 +45,9 @@ def main() -> None:
     else:
         delete_local_file(local_path)
 
-    logger.info(f"End of the pipeline at {datetime.now().isoformat(timespec='seconds')}")
+    logger.info(
+        f"End of the pipeline at {datetime.now().isoformat(timespec='seconds')}"
+    )
 
 
 if __name__ == "__main__":

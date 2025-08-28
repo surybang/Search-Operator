@@ -1,4 +1,5 @@
 """This script aims to read a csv from a local directory"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -9,11 +10,11 @@ from decorators import timed
 
 @timed("Read CSV")
 def read_csv_local(
-        path: str | Path,
-        encodings: list[str] = ["utf-8", "ISO-8859-1"],
-        separators: list[str] = [",", ";"],
-        sample_rows: int = 50
-        ) -> pd.DataFrame:
+    path: str | Path,
+    encodings: list[str] = ["utf-8", "ISO-8859-1"],
+    separators: list[str] = [",", ";"],
+    sample_rows: int = 50,
+) -> pd.DataFrame:
     """
     Try to read a CSV file by testing multiple encoding and separator combinations.
 
@@ -42,7 +43,9 @@ def read_csv_local(
     """
     for encoding, separator in zip(encodings, separators):
         try:
-            logger.info(f"Test reading DataFrame with (sep='{separator}', encoding='{encoding}')")
+            logger.info(
+                f"Test reading DataFrame with (sep='{separator}', encoding='{encoding}')"
+            )
             # first, we try with a sample
             pd.read_csv(path, sep=separator, encoding=encoding, nrows=sample_rows)
             # if its ok we assign df
@@ -51,9 +54,13 @@ def read_csv_local(
             return df
 
         except UnicodeDecodeError:
-            logger.warning(f"UnicodeDecodeError with (sep='{separator}', encoding='{encoding}')")
+            logger.warning(
+                f"UnicodeDecodeError with (sep='{separator}', encoding='{encoding}')"
+            )
 
         except pd.errors.ParserError:
-            logger.warning(f"ParserError with (sep='{separator}', encoding='{encoding}')")
+            logger.warning(
+                f"ParserError with (sep='{separator}', encoding='{encoding}')"
+            )
 
     raise RuntimeError("Can't read CSV file with the specified config")

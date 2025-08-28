@@ -30,10 +30,8 @@ def s3_file_hash(fs: s3fs.S3FileSystem, s3_uri: str) -> str:
 
 
 def get_latest_remote_file(
-        fs: s3fs.S3FileSystem,
-        remote_path: str,
-        stem: str = "MAJNUM"
-        ) -> str | None:
+    fs: s3fs.S3FileSystem, remote_path: str, stem: str = "MAJNUM"
+) -> str | None:
     """
     Retrieve the latest file in MinIO matching a naming pattern.
 
@@ -57,12 +55,8 @@ def get_latest_remote_file(
 
 @timed("Upload if new")
 def upload_if_new(
-        fs: s3fs.S3FileSystem,
-        bucket: str,
-        key: str,
-        local_path: Path,
-        stem: str = "MAJNUM"
-        ) -> bool:
+    fs: s3fs.S3FileSystem, bucket: str, key: str, local_path: Path, stem: str = "MAJNUM"
+) -> bool:
     """
     Upload a local file to MinIO only if its content differs from the last version stored.
 
