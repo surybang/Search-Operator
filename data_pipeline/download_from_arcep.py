@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from loguru import logger
 
-from data_pipeline.exceptions import DownloadError
+from data_pipeline import DownloadError
 from decorators import timed
 
 

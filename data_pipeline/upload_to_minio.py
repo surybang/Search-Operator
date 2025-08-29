@@ -7,7 +7,7 @@ import hashlib
 from loguru import logger
 import s3fs
 
-from data_pipeline.exceptions import UploadError
+from data_pipeline import UploadError
 from decorators import timed
 
 

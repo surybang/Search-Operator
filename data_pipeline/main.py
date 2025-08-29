@@ -6,10 +6,12 @@ from datetime import datetime
 from loguru import logger
 import s3fs
 
-from data_pipeline.download import download_to_local
-from data_pipeline.read import read_csv_local
-from data_pipeline.upload import upload_if_new
-from data_pipeline.delete import delete_local_file
+from data_pipeline import (
+    download_to_local,
+    read_csv_local,
+    upload_if_new,
+    delete_local_file,
+)
 
 
 def main() -> None:

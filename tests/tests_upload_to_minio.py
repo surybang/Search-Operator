@@ -4,13 +4,13 @@ import hashlib
 import pytest
 import fsspec
 
-from data_pipeline.upload import (
+from data_pipeline import (
     file_hash,
     s3_file_hash,
     get_latest_remote_file,
     upload_if_new,
+    UploadError,
 )
-from data_pipeline.exceptions import UploadError
 
 
 # ---------- Helpers ----------

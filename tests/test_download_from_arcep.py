@@ -3,8 +3,7 @@ from pathlib import Path
 import requests
 import pytest
 
-from data_pipeline.download import download_to_local
-from data_pipeline.exceptions import DownloadError
+from data_pipeline import DownloadError, download_to_local
 
 
 class DummyResponse:

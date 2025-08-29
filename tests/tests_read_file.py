@@ -1,6 +1,6 @@
 import pathlib as Path
 
-from data_pipeline.read import read_csv_local
+from data_pipeline import read_csv_local
 
 
 def test_read_csv_utf8(tmp_path: Path):
