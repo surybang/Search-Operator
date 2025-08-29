@@ -5,10 +5,10 @@ from data_pipeline.upload_to_minio import upload_if_new
 from data_pipeline.delete import delete_local_file
 
 __all__ = [
-    'delete_local_file',
-    'upload_if_new',
-    'read_csv_local',
-    'download_to_local',
-    'UploadError',
-    'DownloadError',
-    ]
+    "delete_local_file",
+    "upload_if_new",
+    "read_csv_local",
+    "download_to_local",
+    "UploadError",
+    "DownloadError",
+]
