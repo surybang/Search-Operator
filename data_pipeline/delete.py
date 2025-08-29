@@ -1,3 +1,5 @@
+"""This script aims to delete a local file"""
+
 from pathlib import Path
 
 from decorators import timed

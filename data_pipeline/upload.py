@@ -1,3 +1,5 @@
+"""This script aims to upload a CSV file to MinIO if it's a new one"""
+
 from datetime import datetime
 from pathlib import Path
 import hashlib
